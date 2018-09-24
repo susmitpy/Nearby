@@ -4,6 +4,7 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     String b;
     String lat1;
     String long1;
+    String latCurr, longCurr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
         status.append("\n" + long1);
         Location = "Location";
         Double lat2, long2;
-        lat2 = Double.parseDouble(lat1);
-        long2 = Double.parseDouble(long1);
+        lat2 = Double.parseDouble(latCurr);
+        long2 = Double.parseDouble(longCurr);
         loc = new GeoPoint(lat2, long2);
         Map<String, Object> usermap = new HashMap<String, Object>();
         usermap.put(Location, loc);
@@ -144,8 +146,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void  get_loc() {
-
+    public void get_loc() {
+        SingleShotLocationProvider.requestSingleUpdate(MainActivity.this,
+                new SingleShotLocationProvider.LocationCallback() {
+                    @Override
+                    public void onNewLocationAvailable(SingleShotLocationProvider.GPSCoordinates location) {
+                         latCurr = String.valueOf(location.latitude);
+                         longCurr = String.valueOf(location.longitude);
+                         finish();
+                    }
+                });
        }
 
 
