@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Nearby</string>
+    <string name="toggleinfo">Start/Stop Checking\nFor Nearby Members</string>
+    <string name="details">You Are Near To </string>
+</resources>
